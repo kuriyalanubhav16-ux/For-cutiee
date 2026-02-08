@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Cutiee</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        :root { --pink: #ff4d8d; --light-pink: #fff0f5; --yellow: #ffeb3b; }
+
+        body {
+            margin: 0; background-color: #fef1f5; font-family: 'Poppins', sans-serif;
+            display: flex; flex-direction: column; align-items: center; overflow-x: hidden;
+        }
+
+        .card {
+            background: white; width: 85%; max-width: 380px; margin: 40px 0; padding: 25px;
+            border-radius: 20px; border: 4px solid var(--yellow);
+            box-shadow: 0 15px 35px rgba(255, 77, 141, 0.15); text-align: center;
+        }
+
+        h1, h2 { font-family: 'Dancing Script', cursive; color: var(--pink); }
+        
+        .intro { height: 80vh; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        
+        .photo-container { display: flex; gap: 10px; margin: 20px 0; justify-content: center; }
+        .photo-box { 
+            width: 140px; height: 180px; border-radius: 10px; border: 3px solid var(--yellow); 
+            overflow: hidden; background: #eee; 
+        }
+        .photo-box img { width: 100%; height: 100%; object-fit: cover; }
+
+        .btn-group { height: 120px; position: relative; margin-top: 20px; }
+        .btn {
+            padding: 12px 25px; border-radius: 25px; border: none; font-weight: bold;
+            cursor: pointer; transition: 0.3s;
+        }
+        .btn-yes { background: var(--pink); color: white; }
+        .btn-no { background: #f0f0f0; color: #888; position: absolute; left: 50%; transform: translateX(-50%); }
+
+        .drag-box {
+            background: #fff9c4; padding: 20px; border-radius: 15px;
+            display: flex; justify-content: space-around; align-items: center;
+        }
+
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+    <div class="intro">
+        <h1 style="font-size: 3rem;">Propose Day 💍</h1>
+        <p style="color: var(--pink); animation: bounce 2s infinite;">scroll down ↓</p>
+    </div>
+
+    <div class="card" id="card1">
+        <h2>Do you believe in forever?</h2>
+        <button class="btn btn-yes" onclick="nextCard(1, 2)">Yes</button>
+    </div>
+
+    <div class="card hidden" id="card2">
+        <h2>Would you choose me again?</h2>
+        <div class="btn-group" id="container2">
+            <button class="btn btn-yes" onclick="nextCard(2, 3)">Yes, Always!</button>
+            <button id="no-btn" class="btn btn-no" onmouseover="dodge()">No</button>
+        </div>
+    </div>
+
+    <div class="card hidden" id="card3">
+        <h2>My Forever Choice</h2>
+        <div class="photo-container">
+            <div class="photo-box"><img src="https://i.postimg.cc/T3m8yY6n/IMG-20251230-WA0347.jpg"></div>
+            <div class="photo-box"><img src="https://i.postimg.cc/9FmKqS3Y/IMG-20251230-WA0020.jpg"></div>
+        </div>
+        <button class="btn btn-yes" onclick="nextCard(3, 4)">Next ❤️</button>
+    </div>
+
+    <div class="card hidden" id="card4">
+        <h2>Will you say yes?</h2>
+        <div class="drag-box">
+            <span id="ring" draggable="true" ondragstart="drag(event)" style="font-size: 40px; cursor: grab;">💍</span>
+            <span id="heart" ondrop="drop(event)" ondragover="allowDrop(event)" style="font-size: 60px;">❤️</span>
+        </div>
+    </div>
+
+    <div class="card hidden" id="card5">
+        <h1 style="font-size: 2.2rem;">Happy Propose Day</h1>
+        <h1 style="font-size: 2rem; color: var(--pink);">and love you cutiee</h1>
+    </div>
+
+    <script>
+        function nextCard(current, next) {
+            document.getElementById('card' + current).classList.add('hidden');
+            document.getElementById('card' + next).classList.remove('hidden');
+        }
+
+        function dodge() {
+            const btn = document.getElementById('no-btn');
+            const container = document.getElementById('container2');
+            btn.style.left = Math.random() * (container.clientWidth - btn.clientWidth) + 'px';
+            btn.style.top = Math.random() * (container.clientHeight - btn.clientHeight) + 'px';
+        }
+
+        function allowDrop(ev) { ev.preventDefault(); }
+        function drag(ev) { ev.dataTransfer.setData("text", ev.target.id); }
+        function drop(ev) {
+            ev.preventDefault();
+            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 }, colors: ['#ff4d8d', '#ffeb3b', '#ffffff'] });
+            nextCard(4, 5);
+        }
+    </script>
+</body>
+  </html>
